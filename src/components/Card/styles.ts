@@ -8,7 +8,7 @@ export const Container = styled.View`
   width: 100%;
   height: 49px;
   border: 1px;
-  border-color: ${({ theme }) => theme.COLORS.GRAY_300};
+  border-color: ${({ theme }) => theme.COLORS.GRAY_200};
   border-radius: 4px;
   flex-direction: row;
   align-items: center;

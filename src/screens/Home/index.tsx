@@ -21,6 +21,12 @@ export function Home() {
   }, []);
 
   async function handleNewMeal() {
+    await addDietToList({
+      date: new Date().toString(),
+      inDiet: true,
+      title: 'teste'
+    })
+    fetchDietList();
   }
 
   return (
@@ -39,7 +45,6 @@ export function Home() {
         keyExtractor={dietCard => dietCard.date}
         renderItem={({ item }) => (
           <Card hour={`${new Date(item.date).getHours()}:${new Date(item.date).getMinutes()}`} title={item.title} isInDiet={item.inDiet}/>
-          //<Card hour={`${String(item.date.getHours()).padStart(2, '0')}:${item.date.getMinutes()}`} title={item.title} isInDiet={item.inDiet} />
         )}
         renderSectionHeader={({ section: { title } }) => (
           <ListSection>{title}</ListSection>
