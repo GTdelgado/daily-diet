@@ -1,23 +1,9 @@
-import { ArrowLeft } from 'phosphor-react-native';
-import { Icon } from './../../components/Button/styles';
-import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
-
-
-type Props = {
-    percentage: number;
-}
 
 type InDietProps = {
   inDiet: boolean;
 }
   
-
-export const Container = styled(SafeAreaView)<Props>`
-    flex: 1;
-    background-color: ${({ theme, percentage }) => percentage < 50 ? theme.COLORS.RED_100 : theme.COLORS.GREEN_100};
-    align-items: center;
-`
 export const Percentage = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONT_FAMILY.BOLD};
@@ -36,24 +22,6 @@ export const Description = styled.Text`
   margin-bottom: 34px;
 `;
 
-export const ExpandIcon = styled(ArrowLeft).attrs<Props>(({ theme, percentage }) => ({
-  size: 24,
-  color: percentage < 50 ? theme.COLORS.RED_500 : theme.COLORS.GREEN_500,
-}))<Props>`
-  position: absolute;
-  top: 40px;
-  left: 0px;
-  margin: 8px;
-`;
-
-export const ResumeContainer = styled.View`
-    flex: 1;
-    width: 100%;
-    border-radius: 20px;
-    background-color: ${({ theme }) => theme.COLORS.GRAY_100};
-    align-items: center;
-    padding: 33px 24px;
-`;
 
 export const GreaterText = styled.Text`
   ${({ theme }) => css`

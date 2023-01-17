@@ -1,8 +1,8 @@
-import { Container, Description, ExpandIcon, Percentage, InDiet, ResumeContainer, Sequence, GreaterText, MediunText, SmallText, InDietContainer } from "./styles";
+import { Description, Percentage, InDiet, Sequence, GreaterText, MediunText, SmallText, InDietContainer } from "./styles";
 import { dietSectionDTO } from "@components/dto/dietDTO";
 import { getDailyDietList } from "@storage/dietStorage";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Layout, GoBackButton, Resume } from "@components/Layout";
 
 type Details = {
   greatherSequence: number;
@@ -12,7 +12,7 @@ type Details = {
   percentage: number;
 }
 
-export function Resume() {
+export function ResumeList() {
   const [dietList, setDietList] = useState<dietSectionDTO[]>([])
   async function fetchDietList() {
     setDietList(await getDailyDietList())
@@ -41,7 +41,6 @@ export function Resume() {
 
         if (diet.inDiet === true && atual.lastStatus === true) {
           atual.atualSequence++;
-          console.log(atual.atualSequence)
         } else {
           atual.bestSequence = atual.bestSequence > atual.atualSequence ? atual.bestSequence : atual.atualSequence;
           atual.atualSequence = 1;
@@ -51,13 +50,12 @@ export function Resume() {
       })
     })
     detail.greatherSequence = atual.bestSequence > atual.atualSequence ? atual.bestSequence : atual.atualSequence;
-    
+
     detail.percentage = (detail.inDiet / detail.total * 100);
     return detail;
   }
 
   const detail = getDetails();
-
 
   useEffect(() => {
     fetchDietList();
@@ -65,11 +63,11 @@ export function Resume() {
   }, []);
 
   return (
-    <Container percentage={detail.percentage}>
+    <Layout percentage={detail.percentage}>
+      <GoBackButton percentage={detail.percentage}/>
       <Percentage>{detail.percentage.toFixed(2)}%</Percentage>
       <Description>das refeições dentro da dieta</Description>
-      <ExpandIcon percentage={Number(detail.percentage)} />
-      <ResumeContainer>
+      <Resume>
         <MediunText>Estatísticas gerais</MediunText>
         <Sequence >
           <GreaterText>{detail.greatherSequence}</GreaterText>
@@ -90,7 +88,7 @@ export function Resume() {
             <SmallText>refeições fora da dieta</SmallText>
           </InDiet>
         </InDietContainer>
-      </ResumeContainer>
-    </Container>
+      </Resume>
+    </Layout>
   );
 };

@@ -1,16 +1,19 @@
 import { Header } from "@components/Header";
 import { Container, ListSection, Text } from "./styles";
 import { Percent } from "@components/Percent";
-import { Button } from "@components/Button";
+import { Button } from "@components/Form/Button";
 import { Card } from "@components/Card";
 import { dietSectionDTO } from "@components/dto/dietDTO";
 import { useState } from "react";
 import { SectionList } from "react-native";
 import { useEffect } from "react";
 import { addDietToList, getDailyDietList } from "@storage/dietStorage";
+import { useNavigation } from "@react-navigation/native";
 
 export function Home() {
   const [dietList, setDietList] = useState<dietSectionDTO[]>([])
+
+  const {navigate} = useNavigation();
 
   async function fetchDietList(){
     setDietList(await getDailyDietList())
@@ -21,11 +24,7 @@ export function Home() {
   }, []);
 
   async function handleNewMeal() {
-    await addDietToList({
-      date: new Date().toString(),
-      inDiet: true,
-      title: 'teste'
-    })
+    navigate('new');
     fetchDietList();
   }
 
